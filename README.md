@@ -1,5 +1,10 @@
 # Config Baseline
 
+> **Deprecated for new Claude Code integrations — 2026-09-22.** Retained as an
+> Apache-2.0 reference project. Public launch remains deferred and the repository
+> remains private. This is a maintainer status decision, not a claim that Claude
+> Code replaces every capability. No ongoing feature work or support is promised.
+
 Record a content-and-permission inventory of explicitly selected configuration
 files/directories, then report what was added, removed, or changed. Selected files
 are read as bytes; they are never executed. A matching inventory means only that
@@ -62,3 +67,10 @@ and **32 directory levels**. They are adjustable with `--max-entries`,
 
 See [the documentation index](docs/README.md), [inventory semantics](docs/inventory.md),
 [manifest and publication contract](docs/manifest.md), and [provenance](PROVENANCE.md).
+
+## License and maintenance
+
+Copyright 2026 Aditya Dalmia. Licensed under [Apache-2.0](LICENSE), with
+[attribution](NOTICE) and [source provenance](PROVENANCE.md). Public launch is
+deferred; repository access remains private. See the [release preparation index](docs/release/README.md),
+[contributing guide](CONTRIBUTING.md), and [security contact](SECURITY.md).

@@ -15,4 +15,4 @@ home/project roots, verdict ledger, remediation proposals, or security verdicts
 are retained.
 
 No private remote or personal path is needed to build or use this component.
-Licensing remains pending repository-owner review before wider distribution.
+The owner selected Apache-2.0 on 2026-09-22. See LICENSE and NOTICE; public launch remains deferred.
