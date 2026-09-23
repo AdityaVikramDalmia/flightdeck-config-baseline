@@ -1,8 +1,8 @@
 # Config Baseline
 
 > **Deprecated for new Claude Code integrations — 2026-09-22.** Retained as an
-> Apache-2.0 reference project. Public launch remains deferred and the repository
-> remains private. This is a maintainer status decision, not a claim that Claude
+> Apache-2.0 public reference implementation. This is a maintainer status
+> decision, not a claim that Claude
 > Code replaces every capability. No ongoing feature work or support is promised.
 
 Record a content-and-permission inventory of explicitly selected configuration
@@ -11,7 +11,7 @@ are read as bytes; they are never executed. A matching inventory means only that
 the recorded attributes match your reference. It is not a malware scan or a safety
 certification.
 
-**Private release candidate: 0.1.0rc1.** Requires Python 3.9+ on POSIX systems with
+**Public reference implementation: 0.1.0rc1.** Requires Python 3.9+ on POSIX systems with
 descriptor-relative filesystem operations. macOS and an unprivileged Alpine Linux container have been verified. Windows is unsupported. No third-party packages, Git,
 network calls, or background service are required.
 
@@ -71,6 +71,6 @@ See [the documentation index](docs/README.md), [inventory semantics](docs/invent
 ## License and maintenance
 
 Copyright 2026 Aditya Dalmia. Licensed under [Apache-2.0](LICENSE), with
-[attribution](NOTICE) and [source provenance](PROVENANCE.md). Public launch is
-deferred; repository access remains private. See the [release preparation index](docs/release/README.md),
+[attribution](NOTICE) and [source provenance](PROVENANCE.md). This is a public
+reference implementation, deprecated for new Claude Code integrations as of 2026-09-22. See the [release preparation index](docs/release/README.md),
 [contributing guide](CONTRIBUTING.md), and [security contact](SECURITY.md).

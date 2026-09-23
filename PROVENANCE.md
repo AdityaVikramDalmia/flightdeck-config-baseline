@@ -15,4 +15,4 @@ home/project roots, verdict ledger, remediation proposals, or security verdicts
 are retained.
 
 No private remote or personal path is needed to build or use this component.
-The owner selected Apache-2.0 on 2026-09-22. See LICENSE and NOTICE; public launch remains deferred.
+The owner selected Apache-2.0 on 2026-09-22. See LICENSE and NOTICE. The repository is a public reference implementation, deprecated for new Claude Code integrations as of 2026-09-22.
