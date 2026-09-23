@@ -1,29 +1,49 @@
 # Config Baseline
 
-> **Deprecated for new Claude Code integrations — 2026-09-22.** Retained as an
-> Apache-2.0 public reference implementation. This is a maintainer status
-> decision, not a claim that Claude
-> Code replaces every capability. No ongoing feature work or support is promised.
+Record a content-and-permission inventory of explicitly selected configuration files and
+directories, then report what was added, removed, or changed since that reference: for scripts and
+reviewers who need to know whether configuration still matches what they last reviewed.
 
-Record a content-and-permission inventory of explicitly selected configuration
-files/directories, then report what was added, removed, or changed. Selected files
-are read as bytes; they are never executed. A matching inventory means only that
-the recorded attributes match your reference. It is not a malware scan or a safety
-certification.
+> **Status:** public Apache-2.0 reference implementation, deprecated for new Claude Code
+> integrations as of 2026-09-22. Not a claim that Claude Code replaces every capability; no
+> ongoing feature work or support is promised.
 
-**Public reference implementation: 0.1.0rc1.** Requires Python 3.9+ on POSIX systems with
-descriptor-relative filesystem operations. macOS and an unprivileged Alpine Linux container have been verified. Windows is unsupported. No third-party packages, Git,
-network calls, or background service are required.
+## What it does
 
-## Install and use
+- `config-baseline snapshot` records each selected root under a label you choose: every file,
+  directory, and symlink with its relative path and permission mode, plus byte size and SHA-256
+  for files and the link text for symlinks. The manifest is strict, versioned JSON.
+- `config-baseline check` inventories the same roots again and reports additions, removals, and
+  changes, as text or JSON.
+- Selected files are read as bytes; they are never executed. The tool never edits scanned files,
+  removes findings, or chooses remediation.
 
-From this checkout:
+## Why it exists
+
+Configuration can change without notice: edited content, a changed permission bit, a new hidden
+file, or a deleted entry. Config Baseline turns those changes into an explicit diff against a
+reference you chose. Removals count as differences, and an incomplete scan is an error: it never
+returns an empty successful diff.
+
+## Install
+
+Version 0.1.0rc1. Requires Python 3.9+ on POSIX systems with descriptor-relative filesystem
+operations. Windows is unsupported. No third-party packages, Git, network calls, or background
+service are required.
 
 ```bash
+git clone https://github.com/AdityaVikramDalmia/flightdeck-config-baseline.git
+cd flightdeck-config-baseline
 make test
 make install PREFIX="$HOME/.local"
 export PATH="$HOME/.local/bin:$PATH"
+```
 
+The installed command is one self-contained file. `./bin/config-baseline` also works directly.
+
+## Quick use
+
+```bash
 # Put the manifest outside the selected roots. Its parent must already exist.
 mkdir -p ./references
 config-baseline snapshot --manifest ./references/config.json \
@@ -36,8 +56,7 @@ config-baseline check --json --manifest ./references/config.json \
   --root app=./app-config --root service=./service.conf
 ```
 
-The installed command is one self-contained file. `./bin/config-baseline` also
-works directly. `bash examples/demo.sh` creates and checks isolated fixtures.
+`bash examples/demo.sh` creates and checks isolated fixtures.
 
 Root names are stable labels you choose; paths must be explicit on every command.
 A root can be a regular file, directory, or symlink. Directories include all their
@@ -52,8 +71,7 @@ config-baseline snapshot --overwrite --manifest ./references/config.json \
   --root app=./app-config --root service=./service.conf
 ```
 
-Inspect changes before replacing a reference. The tool never edits scanned files,
-removes findings, or chooses remediation. A missing selected root during `check`
+Inspect changes before replacing a reference. A missing selected root during `check`
 is reported as removal; it is an error during `snapshot`.
 
 Exit **0**: snapshot published or comparison unchanged. Exit **3**: differences
@@ -61,12 +79,29 @@ found, including removals. Exit **2**: invalid input, unreadable/unsupported dat
 invalid manifest, exceeded budget, or another incomplete operation. JSON errors
 have `status: "error"`; an incomplete scan never returns an empty successful diff.
 
-Default scan budgets are **10,000 entries**, **100 MiB of regular-file contents**,
-and **32 directory levels**. They are adjustable with `--max-entries`,
-`--max-bytes`, and `--max-depth`. Manifests have a fixed 16 MiB size limit.
-
 See [the documentation index](docs/README.md), [inventory semantics](docs/inventory.md),
 [manifest and publication contract](docs/manifest.md), and [provenance](PROVENANCE.md).
+
+## Limits
+
+- A matching inventory means only that the recorded attributes match your reference. It is not a
+  malware scan or a safety certification, and a valid manifest does not prove the reference is
+  authentic ([manifest contract](docs/manifest.md)).
+- Default scan budgets are **10,000 entries**, **100 MiB of regular-file contents**,
+  and **32 directory levels**. They are adjustable with `--max-entries`,
+  `--max-bytes`, and `--max-depth`. Manifests have a fixed 16 MiB size limit.
+- Ownership, ACLs, extended attributes, timestamps, and hard-link relationships are not recorded.
+  Reads are not an atomic filesystem snapshot; stop writers when consistency matters
+  ([inventory semantics](docs/inventory.md)). Network filesystems and multiple hosts are
+  unsupported ([publication contract](docs/manifest.md)).
+
+## Test
+
+```bash
+make test
+```
+
+macOS and an unprivileged Alpine Linux container have been verified.
 
 ## License and maintenance
 
